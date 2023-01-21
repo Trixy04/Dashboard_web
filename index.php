@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "mamp";
 $password = "";
@@ -21,11 +22,12 @@ if(isset($_POST["email"])){
     $email = stripcslashes($email);
     $pw = stripcslashes($pw);
     
-    $sql = "SELECT email FROM userData WHERE email = '$email' and pass = '$pw'";
+    $sql = "SELECT email, nome, cognome FROM userData WHERE email = '$email' and pass = '$pw'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
     $count = mysqli_num_rows($result);
-    
+
+    $_SESSION["nominativo"] = $row["cognome"] . " " . $row["nome"];
     
     if ($count == 1) {
         $email = "";
